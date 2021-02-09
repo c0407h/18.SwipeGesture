@@ -32,12 +32,70 @@ class ViewController: UIViewController {
         imgUp.append(UIImage(named: "arrow-up-red.png")!)
         imgDown.append(UIImage(named: "arrow-down-black.png")!)
         imgDown.append(UIImage(named: "arrow-down-red.png")!)
-        imgLeft.append(UIImage(named: "arrow-down-black.png")!)
-        imgLeft.append(UIImage(named: "arrow-down-red.png")!)
-        imgRight.append(UIImage(named: "arrow-down-black.png")!)
-        imgRight.append(UIImage(named: "arrow-down-red.png")!)
+        imgLeft.append(UIImage(named: "arrow-left-black.png")!)
+        imgLeft.append(UIImage(named: "arrow-left-red.png")!)
+        imgRight.append(UIImage(named: "arrow-right-black.png")!)
+        imgRight.append(UIImage(named: "arrow-right-red.png")!)
+        
+        //각 이미지 뷰에 할당하기
+        // 각 배열의 첫 번째 값은 검은색 화살표를 나타내며, 인자 값[0]을 사용하여 참조할 수 있다.
+        // 또한 두 번째 값은 빨간색 화살표를 나타내며, 인가 값[1]을 사용하여 참조할 수 있다.
+        imgViewUp.image = imgUp[0]
+        imgViewDown.image = imgDown[0]
+        imgViewLeft.image = imgLeft[0]
+        imgViewRight.image = imgRight[0]
+        
+        //스와이프 제스처 인식하기
+        // UISwipeGestureRecognizer 클래스 상수 swipeUp을 선언
+        // 액션(action)인수는 해당 스와이프 제스처를 행했을 때 실행할 메서드를 의미한다
+        let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(ViewController.respondToSwipeGesture(_:)))
+        // 위에서 선언한 UISwipeGestureRecognizer클래스 상수 swipeUp의 direction 속성을 설정한다. 여기서는 up으로 설정
+        swipeUp.direction = UISwipeGestureRecognizer.Direction.up
+        // 뷰 객체의 addGestureRecognizer메서드를 사용하여 위쪽 방향의 스와이프 제스처를 등록한다.
+        self.view.addGestureRecognizer(swipeUp)
+        //위와 같은 방식으로 down, left, rigth 도 만들어준다
+        
+        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(ViewController.respondToSwipeGesture(_:)))
+        swipeDown.direction = UISwipeGestureRecognizer.Direction.down
+        self.view.addGestureRecognizer(swipeDown)
+        
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(ViewController.respondToSwipeGesture(_:)))
+        swipeLeft.direction = UISwipeGestureRecognizer.Direction.left
+        self.view.addGestureRecognizer(swipeLeft)
+        
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(ViewController.respondToSwipeGesture(_:)))
+        swipeRight.direction = UISwipeGestureRecognizer.Direction.right
+        self.view.addGestureRecognizer(swipeRight)
+        
     }
 
-
+    
+        // 액션 메서드 구현하기.
+    @objc func respondToSwipeGesture(_ gesture: UIGestureRecognizer) {
+        // 만일 제스쳐가 있다면
+        if let swipeGesture = gesture as? UISwipeGestureRecognizer {
+            // 우선 전체 이미지 뷰를 검은색 화살표로 초기화 한다( 배열 인자 값[0] 사용 )
+            imgViewUp.image = imgUp[0]
+            imgViewDown.image = imgDown[0]
+            imgViewLeft.image = imgLeft[0]
+            imgViewRight.image = imgRight[0]
+            
+            // switch 문을 사용해 제스처의 방향에 따라 해당 방향의 이미지를 빨간색 이미지로 변경한다(배열 인자 값[1]사용)
+            switch swipeGesture.direction {
+            case UISwipeGestureRecognizer.Direction.up:
+                imgViewUp.image = imgUp[1]
+            case UISwipeGestureRecognizer.Direction.down:
+                imgViewDown.image = imgDown[1]
+            case UISwipeGestureRecognizer.Direction.right:
+                imgViewRight.image = imgRight[1]
+            case UISwipeGestureRecognizer.Direction.left:
+                imgViewLeft.image = imgLeft[1]
+            default:
+                break
+            }
+        }
+    }
+    
+    
 }
 
