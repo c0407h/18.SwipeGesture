@@ -59,27 +59,61 @@ class ViewController: UIViewController {
         let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(ViewController.respondToSwipeGesture(_:)))
         // 위에서 선언한 UISwipeGestureRecognizer클래스 상수 swipeUp의 direction 속성을 설정한다. 여기서는 up으로 설정
         swipeUp.direction = UISwipeGestureRecognizer.Direction.up
+       
         // 멀티터치 스와이프 제스처를 등록할땐 numberOfTouchesRequired 속성이 필요한데 이속성엔 앞에서 설정한 터치 개수인 numOfTouchs를 입력
-        swipeUp.numberOfTouchesRequired = numOfTouchs
+        // swipeUp.numberOfTouchesRequired = numOfTouchs
+        
         // 뷰 객체의 addGestureRecognizer메서드를 사용하여 위쪽 방향의 스와이프 제스처를 등록한다.
         self.view.addGestureRecognizer(swipeUp)
         //위와 같은 방식으로 down, left, rigth 도 만들어준다
         
         let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(ViewController.respondToSwipeGesture(_:)))
         swipeDown.direction = UISwipeGestureRecognizer.Direction.down
-        swipeDown.numberOfTouchesRequired = numOfTouchs
+
+        // swipeDown.numberOfTouchesRequired = numOfTouchs
+        
         self.view.addGestureRecognizer(swipeDown)
         
         let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(ViewController.respondToSwipeGesture(_:)))
         swipeLeft.direction = UISwipeGestureRecognizer.Direction.left
-        swipeLeft.numberOfTouchesRequired = numOfTouchs
+
+        // swipeLeft.numberOfTouchesRequired = numOfTouchs
+        
         self.view.addGestureRecognizer(swipeLeft)
         
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(ViewController.respondToSwipeGesture(_:)))
+        
         swipeRight.direction = UISwipeGestureRecognizer.Direction.right
-        swipeRight.numberOfTouchesRequired = numOfTouchs
+
+        // swipeRight.numberOfTouchesRequired = numOfTouchs
+        
         self.view.addGestureRecognizer(swipeRight)
         
+        
+        // 스와이프 제스처 등록하기
+        // swipeUpMulti 상수 선언하고 액션 메서드는 respondToSwipeGestureMulti 사용
+        // swipeUpMulti 상수의 numberOfTouchesRequired 속성에 numOfTouchs 값 입력
+        
+        let swipeUpMulti = UISwipeGestureRecognizer(target: self, action: #selector(ViewController.respondToSwipeGestureMulti(_:)))
+        swipeUpMulti.direction = UISwipeGestureRecognizer.Direction.up
+        swipeUpMulti.numberOfTouchesRequired = numOfTouchs
+        self.view.addGestureRecognizer(swipeUpMulti)
+        
+
+        let swipeDownMulti = UISwipeGestureRecognizer(target: self, action: #selector(ViewController.respondToSwipeGestureMulti(_:)))
+        swipeDownMulti.direction = UISwipeGestureRecognizer.Direction.down
+        swipeDownMulti.numberOfTouchesRequired = numOfTouchs
+        self.view.addGestureRecognizer(swipeDownMulti)
+        
+        let swipeLeftMulti = UISwipeGestureRecognizer(target: self, action: #selector(ViewController.respondToSwipeGestureMulti(_:)))
+        swipeLeftMulti.direction = UISwipeGestureRecognizer.Direction.left
+        swipeLeftMulti.numberOfTouchesRequired = numOfTouchs
+        self.view.addGestureRecognizer(swipeLeftMulti)
+        
+        let swipeRightMulti = UISwipeGestureRecognizer(target: self, action: #selector(ViewController.respondToSwipeGestureMulti(_:)))
+        swipeRightMulti.direction = UISwipeGestureRecognizer.Direction.right
+        swipeRightMulti.numberOfTouchesRequired = numOfTouchs
+        self.view.addGestureRecognizer(swipeRightMulti)
     }
 
     
@@ -109,6 +143,29 @@ class ViewController: UIViewController {
         }
     }
     
+    // 액션 메서드 구현
+    // 두손가락으로 스와이프 했을 때 실행할 액션 메서드 추가
+    @objc func respondToSwipeGestureMulti(_ gesture: UIGestureRecognizer) {
+        if let swipeGesture = gesture as? UISwipeGestureRecognizer {
+            imgViewUp.image = imgUp[0]
+            imgViewDown.image = imgDown[0]
+            imgViewLeft.image = imgLeft[0]
+            imgViewRight.image = imgRight[0]
+            
+            switch swipeGesture.direction {
+            case UISwipeGestureRecognizer.Direction.up:
+                imgViewUp.image = imgUp[2]
+            case UISwipeGestureRecognizer.Direction.down:
+                imgViewDown.image = imgDown[2]
+            case UISwipeGestureRecognizer.Direction.left:
+                imgViewLeft.image = imgLeft[2]
+            case UISwipeGestureRecognizer.Direction.right:
+                imgViewRight.image = imgRight[2]
+            default:
+                break
+            }
+        }
+    }
     
 }
 
